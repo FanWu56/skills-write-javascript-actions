@@ -1,0 +1,15 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check condition
+        id: check
+        run: echo "::set-output name=skip::true"  # 根据实际条件设置为true或false
+
+      - name: Step to be conditionally skipped
+        if: steps.check.outputs.skip != 'true'
+        run: echo "This step will be skipped if the condition is 'true'"
+
+      - name: Final step
+        if: steps.check.outputs.skip != 'true'
+        run: echo "This is another step that will be skipped"
